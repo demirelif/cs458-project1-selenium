@@ -79,6 +79,8 @@ public class testCase_5 {
         signInPassword.sendKeys("12345");
         signInSubmit.click();
 
+        String resultLabel = driver.getCurrentUrl();
+        Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/signedin.html");
     }
 
     @AfterTest
