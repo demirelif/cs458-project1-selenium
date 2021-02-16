@@ -8,12 +8,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class testCase_1 {
+public class testCase_4 {
     static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
     WebDriver driver;
 
     @Test(priority = -100)
-    public void testCase_1(){
+    public void testCase_4(){
         //setting the driver executable
         System.setProperty("webdriver.chrome.driver", "chromedriver");
         //Initiating your chromedriver

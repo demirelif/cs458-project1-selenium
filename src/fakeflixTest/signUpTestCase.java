@@ -1,23 +1,22 @@
 package fakeflixTest;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
-public class fakeflixTestApplication {
+public class signUpTestCase {
     static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
     WebDriver driver;
 
-    @BeforeMethod
-    public void setUp(){
+    @Test(priority = -100)
+    public void signUpTestCase(){
         //setting the driver executable
         System.setProperty("webdriver.chrome.driver", "chromedriver");
         //Initiating your chromedriver
@@ -28,10 +27,7 @@ public class fakeflixTestApplication {
         driver.manage().window().maximize();
         //open browser with desired URL
         driver.get(url);
-    }
 
-    @Test(priority = -100)
-    public void testCase_1(){
         WebElement userEmail = driver.findElement(By.id("signupmail"));
         userEmail.sendKeys("utku@gmail.com");
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
@@ -86,22 +82,13 @@ public class fakeflixTestApplication {
         WebElement signUpButtonLate = driver.findElement(By.xpath("//input[@value='Continue']"));
         signUpButtonLate.click();
 
-        // Accept the alert
         String alert = driver.switchTo().alert().getText();
         System.out.println(alert);
         driver.switchTo().alert().accept();
     }
-
-    @Test(priority = 0)
-    public void testCase_2(){
-        // test me !!
-    }
-
     @AfterTest
     public void terminateBrowser() throws InterruptedException {
         sleep(2500);
         driver.close();
     }
-
-
 }

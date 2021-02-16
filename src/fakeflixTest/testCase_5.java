@@ -1,23 +1,23 @@
 package fakeflixTest;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
-public class fakeflixTestApplication {
+public class testCase_5 {
     static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
     WebDriver driver;
 
-    @BeforeMethod
-    public void setUp(){
+    @Test(priority = -100)
+    public void testCase_5() throws InterruptedException {
         //setting the driver executable
         System.setProperty("webdriver.chrome.driver", "chromedriver");
         //Initiating your chromedriver
@@ -28,10 +28,7 @@ public class fakeflixTestApplication {
         driver.manage().window().maximize();
         //open browser with desired URL
         driver.get(url);
-    }
 
-    @Test(priority = -100)
-    public void testCase_1(){
         WebElement userEmail = driver.findElement(By.id("signupmail"));
         userEmail.sendKeys("utku@gmail.com");
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
@@ -71,30 +68,17 @@ public class fakeflixTestApplication {
         WebElement signOutButton = driver.findElement(By.xpath("//input[@value='Sign Out']"));
         signOutButton.click();
 
+        WebElement signInButton = driver.findElement(By.xpath("//input[@value='Sign in']"));
+        signInButton.click();
 
-        WebElement userEmailLate = driver.findElement(By.id("signupmail"));
-        userEmailLate.sendKeys("utku@gmail.com");
-        WebElement startButtonLate = driver.findElement(By.xpath("//input[@value='Get Started >']"));
-        startButtonLate.click();
-        WebElement continueButtonLate = driver.findElement(By.xpath("//input[@id='nextPageButton']"));
-        continueButtonLate.click();
+        WebElement signInEmailOrPhone = driver.findElement(By.xpath("//input[@placeholder='Email or phone number']"));
+        WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
+        WebElement signInSubmit = driver.findElement(By.xpath("//input[@value='Sign In']"));
 
-        // //input[@placeholder='Add a Password']
-        WebElement userPasswordLate = driver.findElement(By.xpath("//input[@id='signup-password']"));
-        //WebElement userPassword = driver.findElement(By.xpath("//input[@placeholder='Add a Password']"));
-        userPasswordLate.sendKeys("12345");
-        WebElement signUpButtonLate = driver.findElement(By.xpath("//input[@value='Continue']"));
-        signUpButtonLate.click();
+        signInEmailOrPhone.sendKeys("utku@gmail.com");
+        signInPassword.sendKeys("12345");
+        signInSubmit.click();
 
-        // Accept the alert
-        String alert = driver.switchTo().alert().getText();
-        System.out.println(alert);
-        driver.switchTo().alert().accept();
-    }
-
-    @Test(priority = 0)
-    public void testCase_2(){
-        // test me !!
     }
 
     @AfterTest
@@ -102,6 +86,5 @@ public class fakeflixTestApplication {
         sleep(2500);
         driver.close();
     }
-
-
 }
+
