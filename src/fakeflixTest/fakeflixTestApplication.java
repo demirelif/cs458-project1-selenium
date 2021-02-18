@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -14,7 +16,7 @@ public class fakeflixTestApplication {
     static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
     WebDriver driver;
 
-    @BeforeMethod
+    //@BeforeMethod
     public void setUp(){
         //setting the driver executable
         System.setProperty("webdriver.chrome.driver", "chromedriver");
@@ -26,14 +28,12 @@ public class fakeflixTestApplication {
         driver.manage().window().maximize();
         //open browser with desired URL
         driver.get(url);
-
-
     }
 
     @Test(priority = 100)
     public void testCase_1() throws InterruptedException {
+        setUp();
         driver.findElement(By.xpath("//input[@value='Sign in']")).click();
-
         WebElement signInEmailOrPhone = driver.findElement(By.xpath("//input[@placeholder='Email or phone number']"));
         WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
 
@@ -50,14 +50,14 @@ public class fakeflixTestApplication {
         }
     }
 
-
-    public void browserTestingCommon(){
+    public void browserTestingCommon() throws InterruptedException {
         //Applied wait time
         driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
         //maximize window
         driver.manage().window().maximize();
         //open browser with desired URL
         driver.get(url);
+
         WebElement userEmail = driver.findElement(By.id("signupmail"));
         userEmail.sendKeys("utku@gmail.com");
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
@@ -110,10 +110,34 @@ public class fakeflixTestApplication {
 
         String resultLabel = driver.getCurrentUrl();
         Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/signedin.html");
+
+        //sleep(2500);
+        //driver.close();
+    }
+    @Test(priority = 200)
+    public void chromeTesting() throws InterruptedException {
+        System.setProperty("webdriver.chrome.driver", "chromedriver");
+        driver = new ChromeDriver();
+        browserTestingCommon();
+    }
+
+    @Test(priority = 240)
+    public void firefoxTesting() throws InterruptedException {
+        System.setProperty("webdriver.gecko.driver", "geckodriver");
+        driver = new FirefoxDriver();
+        browserTestingCommon();
+    }
+
+    @Test(priority = 280)
+    public void edgeTesting() throws InterruptedException {
+        System.setProperty("webdriver.edge.driver", "msedgedriver");
+        driver = new EdgeDriver();
+        browserTestingCommon();
     }
 
     @Test(priority = 300)
     public void testCase_3(){
+        setUp();
         driver.findElement(By.xpath("//input[@value='Sign in']")).click();
         // FILL EMAIL/PHONE and password inputs
         WebElement name = driver.findElement(By.id("name"));
@@ -132,6 +156,7 @@ public class fakeflixTestApplication {
 
     @Test(priority = 400)
     public void testCase_4(){
+        setUp();
         WebElement userEmail = driver.findElement(By.id("signupmail"));
         userEmail.sendKeys("utku@gmail.com");
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
@@ -188,6 +213,7 @@ public class fakeflixTestApplication {
 
     @Test(priority = 500)
     public void testCase_5() throws InterruptedException {
+        setUp();
         WebElement userEmail = driver.findElement(By.id("signupmail"));
         userEmail.sendKeys("utku@gmail.com");
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
@@ -241,9 +267,6 @@ public class fakeflixTestApplication {
         String resultLabel = driver.getCurrentUrl();
         Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/signedin.html");
     }
-
-
-
 
     @AfterMethod
     public void terminateBrowser() throws InterruptedException {
