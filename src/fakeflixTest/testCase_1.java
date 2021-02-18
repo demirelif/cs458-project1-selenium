@@ -12,7 +12,8 @@ import org.testng.annotations.Test;
 import static java.lang.Thread.sleep;
 
 public class testCase_1 {
-    static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
+    //static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
+    static String url = "http://localhost:8888/cs458-project1/fakenetflix/";
     WebDriver driver;
 
     @Test(priority = -100)
@@ -35,12 +36,15 @@ public class testCase_1 {
 
         signInEmailOrPhone.sendKeys("utku@gmail.com");
         signInPassword.sendKeys("12345");
-
-        for(int i = 0; i < 25; i++){
-            driver.findElement(By.xpath("//button[@type='button']")).click();
-            Thread.sleep(1000);
+        WebElement hideShowButton = driver.findElement(By.xpath("//button[@id='hideShow']"));
+        for(int i = 0; i < 5; i++){
+            hideShowButton.click();
+            // IN THIS IF CONDITION TEST SHOULD FAIL
+            if(hideShowButton.getText().equals("HIDE") && signInPassword.getAttribute("type").equals("password")){
+                Assert.assertEquals("HIDE", "password"); // THIS WILL FAIL THE TEST
+            }
+            Thread.sleep(300);
         }
-        driver.findElement(By.xpath("//input[@value='Sign In']")).click();
     }
     @AfterTest
     public void terminateBrowser() throws InterruptedException {
