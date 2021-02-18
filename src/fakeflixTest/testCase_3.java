@@ -5,9 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 public class testCase_3 {
     static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
@@ -34,14 +37,17 @@ public class testCase_3 {
         WebElement password = driver.findElement(By.id("password"));
         WebElement signInButton = driver.findElement(By.xpath("//input[@value='Sign In']"));
 
-        name.sendKeys("ut ku  ");
-        password.sendKeys("     ");
+        name.sendKeys("nonexisting@gmail.com");
+        password.sendKeys("12345678");
         signInButton.click();
-        String error = driver.switchTo().alert().getText();
-        driver.switchTo().notify();
-        System.out.println(error);
-
+        //driver.findElement(By.xpath("//a[text()='create a new account.']")).click();
+        driver.findElement(By.linkText("create a new account.")).click();
         String resultLabel = driver.getCurrentUrl();
-        Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/signedin.html");
+        Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/index.html");
+    }
+    @AfterTest
+    public void terminateBrowser() throws InterruptedException {
+        sleep(2500);
+        driver.close();
     }
 }
