@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -39,5 +40,8 @@ public class testCase_3 {
         String error = driver.switchTo().alert().getText();
         driver.switchTo().notify();
         System.out.println(error);
+
+        String resultLabel = driver.getCurrentUrl();
+        Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/signedin.html");
     }
 }
