@@ -141,19 +141,21 @@ public class fakeflixTestApplication {
     @Test(priority = 300)
     public void testCase_3(){
         setUp();
-        driver.findElement(By.xpath("//input[@value='Sign in']")).click();
-        // FILL EMAIL/PHONE and password inputs
-        WebElement name = driver.findElement(By.id("name"));
-        WebElement password = driver.findElement(By.id("password"));
-        WebElement signInButton = driver.findElement(By.xpath("//input[@value='Sign In']"));
 
-        name.sendKeys(invalidEmail);
-        password.sendKeys(validPassword);
+        WebElement signInButton = driver.findElement(By.xpath("//input[@value='Sign in']"));
         signInButton.click();
-        // go to create new account page
+
+        WebElement signInEmailOrPhone = driver.findElement(By.xpath("//input[@placeholder='Email or phone number']"));
+        WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
+        WebElement signInSubmit = driver.findElement(By.xpath("//input[@value='Sign In']"));
+
+        signInEmailOrPhone.sendKeys("invalid@gmail.com");
+        signInPassword.sendKeys("1234589");
+        signInSubmit.click();
+
+        //driver.findElement(By.xpath("//a[text()='create a new account.']")).click();
         driver.findElement(By.linkText("create a new account.")).click();
         String resultLabel = driver.getCurrentUrl();
-        // if we are in account creating page test is passed
         Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/index.html");
     }
 
@@ -273,7 +275,7 @@ public class fakeflixTestApplication {
     // THIS METHOD RUNS AFTER ALL TEST CASES AND TERMINATES BROWSER INSTANCE
     @AfterMethod
     public void terminateBrowser() throws InterruptedException {
-        sleep(800);
+        //sleep(800);
         driver.close();
     }
 

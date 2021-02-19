@@ -28,18 +28,18 @@ public class testCase_3 {
         driver.manage().window().maximize();
         //open browser with desired URL
         driver.get(url);
-        // GO TO SIGN IN PAGE
-        WebElement signButton = driver.findElement(By.id("sign-button"));
-        signButton.click();
 
-        // FILL EMAIL/PHONE and password inputs
-        WebElement name = driver.findElement(By.id("name"));
-        WebElement password = driver.findElement(By.id("password"));
-        WebElement signInButton = driver.findElement(By.xpath("//input[@value='Sign In']"));
-
-        name.sendKeys("nonexisting@gmail.com");
-        password.sendKeys("12345678");
+        WebElement signInButton = driver.findElement(By.xpath("//input[@value='Sign in']"));
         signInButton.click();
+
+        WebElement signInEmailOrPhone = driver.findElement(By.xpath("//input[@placeholder='Email or phone number']"));
+        WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
+        WebElement signInSubmit = driver.findElement(By.xpath("//input[@value='Sign In']"));
+
+        signInEmailOrPhone.sendKeys("invalid@gmail.com");
+        signInPassword.sendKeys("1234589");
+        signInSubmit.click();
+
         //driver.findElement(By.xpath("//a[text()='create a new account.']")).click();
         driver.findElement(By.linkText("create a new account.")).click();
         String resultLabel = driver.getCurrentUrl();
@@ -47,7 +47,7 @@ public class testCase_3 {
     }
     @AfterTest
     public void terminateBrowser() throws InterruptedException {
-        sleep(2500);
+        //sleep(2500);
         driver.close();
     }
 }
