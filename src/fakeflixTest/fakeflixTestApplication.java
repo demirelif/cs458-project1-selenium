@@ -15,8 +15,11 @@ import static java.lang.Thread.sleep;
 public class fakeflixTestApplication {
     static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
     WebDriver driver;
+    String validEmail = "utku@gmail.com";
+    String validPassword = "12345";
+    String invalidEmail = "nonexisting@gmail.com";
+    String invalidPassword = "12345678";
 
-    //@BeforeMethod
     public void setUp(){
         //setting the driver executable
         System.setProperty("webdriver.chrome.driver", "chromedriver");
@@ -33,13 +36,15 @@ public class fakeflixTestApplication {
     @Test(priority = 100)
     public void testCase_1() throws InterruptedException {
         setUp();
+        // go to sign in page
         driver.findElement(By.xpath("//input[@value='Sign in']")).click();
         WebElement signInEmailOrPhone = driver.findElement(By.xpath("//input[@placeholder='Email or phone number']"));
         WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
 
-        signInEmailOrPhone.sendKeys("utku@gmail.com");
-        signInPassword.sendKeys("12345");
+        signInEmailOrPhone.sendKeys(validEmail);
+        signInPassword.sendKeys(validPassword);
         WebElement hideShowButton = driver.findElement(By.xpath("//button[@id='hideShow']"));
+        // test hide/show functionality
         for(int i = 0; i < 5; i++){
             hideShowButton.click();
             // IN THIS IF CONDITION TEST SHOULD FAIL
@@ -49,7 +54,7 @@ public class fakeflixTestApplication {
             Thread.sleep(300);
         }
     }
-
+    // common browser testing code piece, invokes browser, signs-up, signs in
     public void browserTestingCommon() throws InterruptedException {
         //Applied wait time
         driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
@@ -59,7 +64,7 @@ public class fakeflixTestApplication {
         driver.get(url);
 
         WebElement userEmail = driver.findElement(By.id("signupmail"));
-        userEmail.sendKeys("utku@gmail.com");
+        userEmail.sendKeys(validEmail);
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
         startButton.click();
         WebElement continueButton = driver.findElement(By.xpath("//input[@id='nextPageButton']"));
@@ -68,7 +73,7 @@ public class fakeflixTestApplication {
         // //input[@placeholder='Add a Password']
         WebElement userPassword = driver.findElement(By.xpath("//input[@id='signup-password']"));
         //WebElement userPassword = driver.findElement(By.xpath("//input[@placeholder='Add a Password']"));
-        userPassword.sendKeys("12345");
+        userPassword.sendKeys(validPassword);
         WebElement signUpButton = driver.findElement(By.xpath("//input[@value='Continue']"));
         signUpButton.click();
         WebElement seeThePlansButton = driver.findElement(By.xpath("//input[@value='See the plans']"));
@@ -104,15 +109,13 @@ public class fakeflixTestApplication {
         WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
         WebElement signInSubmit = driver.findElement(By.xpath("//input[@value='Sign In']"));
 
-        signInEmailOrPhone.sendKeys("utku@gmail.com");
-        signInPassword.sendKeys("12345");
+        signInEmailOrPhone.sendKeys(validEmail);
+        signInPassword.sendKeys(validPassword);
         signInSubmit.click();
 
         String resultLabel = driver.getCurrentUrl();
+        // if we are signed in test is passed
         Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/signedin.html");
-
-        //sleep(2500);
-        //driver.close();
     }
     @Test(priority = 200)
     public void chromeTesting() throws InterruptedException {
@@ -144,12 +147,13 @@ public class fakeflixTestApplication {
         WebElement password = driver.findElement(By.id("password"));
         WebElement signInButton = driver.findElement(By.xpath("//input[@value='Sign In']"));
 
-        name.sendKeys("nonexisting@gmail.com");
-        password.sendKeys("12345678");
+        name.sendKeys(invalidEmail);
+        password.sendKeys(validPassword);
         signInButton.click();
-        //driver.findElement(By.xpath("//a[text()='create a new account.']")).click();
+        // go to create new account page
         driver.findElement(By.linkText("create a new account.")).click();
         String resultLabel = driver.getCurrentUrl();
+        // if we are in account creating page test is passed
         Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/index.html");
     }
 
@@ -158,7 +162,7 @@ public class fakeflixTestApplication {
     public void testCase_4(){
         setUp();
         WebElement userEmail = driver.findElement(By.id("signupmail"));
-        userEmail.sendKeys("utku@gmail.com");
+        userEmail.sendKeys(validEmail);
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
         startButton.click();
         WebElement continueButton = driver.findElement(By.xpath("//input[@id='nextPageButton']"));
@@ -166,7 +170,7 @@ public class fakeflixTestApplication {
 
         WebElement userPassword = driver.findElement(By.xpath("//input[@id='signup-password']"));
         //WebElement userPassword = driver.findElement(By.xpath("//input[@placeholder='Add a Password']"));
-        userPassword.sendKeys("12345");
+        userPassword.sendKeys(validPassword);
         WebElement signUpButton = driver.findElement(By.xpath("//input[@value='Continue']"));
         signUpButton.click();
         WebElement seeThePlansButton = driver.findElement(By.xpath("//input[@value='See the plans']"));
@@ -201,8 +205,8 @@ public class fakeflixTestApplication {
         WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
         WebElement signInSubmit = driver.findElement(By.xpath("//input[@value='Sign In']"));
 
-        signInEmailOrPhone.sendKeys("utku@gmail.com");
-        signInPassword.sendKeys("1234566789");
+        signInEmailOrPhone.sendKeys(validEmail);
+        signInPassword.sendKeys(invalidPassword);
         signInSubmit.click();
 
         driver.findElement(By.linkText("reset your password.")).click();
@@ -214,28 +218,26 @@ public class fakeflixTestApplication {
     @Test(priority = 500)
     public void testCase_5() throws InterruptedException {
         setUp();
+
         WebElement userEmail = driver.findElement(By.id("signupmail"));
-        userEmail.sendKeys("utku@gmail.com");
+        userEmail.sendKeys(validEmail);
         WebElement startButton = driver.findElement(By.xpath("//input[@value='Get Started >']"));
         startButton.click();
         WebElement continueButton = driver.findElement(By.xpath("//input[@id='nextPageButton']"));
         continueButton.click();
 
-        // //input[@placeholder='Add a Password']
         WebElement userPassword = driver.findElement(By.xpath("//input[@id='signup-password']"));
-        //WebElement userPassword = driver.findElement(By.xpath("//input[@placeholder='Add a Password']"));
-        userPassword.sendKeys("12345");
+        userPassword.sendKeys(validPassword);
         WebElement signUpButton = driver.findElement(By.xpath("//input[@value='Continue']"));
         signUpButton.click();
         WebElement seeThePlansButton = driver.findElement(By.xpath("//input[@value='See the plans']"));
         seeThePlansButton.click();
 
-
         WebElement continueButton2 = driver.findElement(By.xpath("//input[@id='continue']"));
         continueButton2.click();
         WebElement continueToPaymentButton = driver.findElement(By.xpath("//input[@value='Credit or Debit Card']"));
         continueToPaymentButton.click();
-
+        // fill credit card information
         WebElement firstName = driver.findElement(By.id("creditcard-firstname"));
         WebElement lastName = driver.findElement(By.id("creditcard-lastname"));
         WebElement cardNumber = driver.findElement(By.id("creditcard-number"));
@@ -260,14 +262,15 @@ public class fakeflixTestApplication {
         WebElement signInPassword = driver.findElement(By.xpath("//input[@placeholder='Password']"));
         WebElement signInSubmit = driver.findElement(By.xpath("//input[@value='Sign In']"));
 
-        signInEmailOrPhone.sendKeys("utku@gmail.com");
-        signInPassword.sendKeys("12345");
+        signInEmailOrPhone.sendKeys(validEmail);
+        signInPassword.sendKeys(validPassword);
         signInSubmit.click();
 
         String resultLabel = driver.getCurrentUrl();
         Assert.assertEquals(resultLabel, "http://localhost:8888/cs458-project1/fakenetflix/signedin.html");
     }
 
+    // THIS METHOD RUNS AFTER ALL TEST CASES AND TERMINATES BROWSER INSTANCE
     @AfterMethod
     public void terminateBrowser() throws InterruptedException {
         sleep(800);
