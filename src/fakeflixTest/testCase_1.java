@@ -12,8 +12,8 @@ import org.testng.annotations.Test;
 import static java.lang.Thread.sleep;
 
 public class testCase_1 {
-    //static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
-    static String url = "http://localhost:8888/cs458-project1/fakenetflix/";
+    static String url = "http://localhost:8888/cs458-project1/fakenetflix/signup3-1.html";
+    //static String url = "http://localhost:8888/cs458-project1/fakenetflix/";
     WebDriver driver;
 
     @Test(priority = -100)
